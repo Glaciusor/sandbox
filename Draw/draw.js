@@ -1,14 +1,26 @@
 
 
-
 //Misc TODOs:
 //When they change size and click on the canvas, the dot they draw is the old size; the click event happens before the blur event - FIX IT!
 //Make a "go away" button that will get rid of all the canvas stuff
 //Add an eraser (draw line with 0 opacity)
-//Make a highlighter tool (sets opacity to some fraction like 20%)
-//
+//Create a userscript that can pull in this file from somewhere, also loads jquery and jcanvas if they aren't available
+//Put a lot of these styles into a stylesheet? If that's done then this JS file needs to pull the CSS or die trying (maybe can provide a monochrome degraded performance mode with a warning)
+//Can has screenshot saved to PNG? Also, being able to attach the screenshot to a ticket in Jira just by specifying a ticket number would be awesome... 1 tool to do it all
+//Make "pen" and "highlighter" mode. What about a mode that allows clicking without drawing, and actually triggers the underlying stuff not canvas? Can do that without hiding the canvas?
+//Make straight-edge mode, horizontal-edge mode, and free-form mode to allow for accurate highlighting and underlining. Default = free-form or perhaps save it in storage
+//Nice way to put in a text box right on the canvas?
+//Displaying by mouse the size/shape/color of the settings would be nice before clicking. This may require saving the canvas and redrawing it a lot with the additional dot on top on a mouse-move with mouse_held being false. 
+//Fix the CSS issue in all the toolbar divs (float: left; display: block; should do it)
+//Would be really nice if the toolbar would animate and hide itself when the mouse isn't near it (mousemove, distance from bottom of window below a threshold = show, else hide)
+//Pretty-ify the toolbar with some CSS3. You know, metallic-looking toolbar, shiny buttons
+//Apply a cool CSS3 shadow to the buttons for whichever color and tool is selected
+//Related to the shadow, for colors, make the shadow the same color as the selected color maybe? As for the tools selected, shade them a bit. Would look pretty and give the user some feedback as to what the settings are.
+//When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
 
 //Note: Intentionally using some of the older jQuery methods as the page this is loaded on may use an old version already
+//TODO: any way to see if $.(whatever) exists, if not then define from the jQuery library I want, to give the features I want on pages reliant on old jQuery?
+
 
 var doodle = {
 	$canvas:  null,
