@@ -1,0 +1,9 @@
+#control_bar div {
+	margin: 6px;
+	float: left;
+	display: inline-block;
+}
+.color_picker {
+	width: 20px;
+	height: 20px;
+}
