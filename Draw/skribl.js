@@ -15,6 +15,9 @@
 //Apply a cool CSS3 shadow to the buttons for whichever color and tool is selected
 //Related to the shadow, for colors, make the shadow the same color as the selected color maybe? As for the tools selected, shade them a bit. Would look pretty and give the user some feedback as to what the settings are.
 //Do proper loading of jquery and jcanvas instead of @require in the userscript. Priority depends on whether it overrides jquery on the current page or just for this script.
+//make proper dev/live setup, not hacky "dev" var
+//use multi-canvas approach to show what would be drawn while mouse is up
+//use multi-canvas approach to allow drawing of arrows
 //When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
 
 //Note: Intentionally using some of the older jQuery methods as the page this is loaded on may use an old version already
@@ -135,6 +138,7 @@ var doodle = {
 };
 
 
-
-	//doodle.initCanvas();
+if (dev) {
+	doodle.initCanvas();
+}
 
