@@ -23,8 +23,6 @@
 //Note: Intentionally using some of the older jQuery methods as the page this is loaded on may use an old version already
 //TODO: any way to see if $.(whatever) exists, if not then define from the jQuery library I want, to give the features I want on pages reliant on old jQuery?
 
-console.log("starting");
-
 var dev = false,
 	linker = {
 		css: dev ? 'skribl.css' : 'http://glaciusor.github.com/sandbox/Draw/skribl.css'
@@ -139,10 +137,5 @@ var doodle = {
 
 
 if (!dev) {
-console.log("initting");
 	doodle.initCanvas();
-}
-else
-{
-	console.log("poop");
 }
