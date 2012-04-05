@@ -24,7 +24,7 @@
 
 var dev = false,
 	linker = {
-		css: dev ? 'skrible.css' : 'http://glaciusor.github.com/sandbox/Draw/skrible.css'
+		css: dev ? 'skribl.css' : 'http://glaciusor.github.com/sandbox/Draw/skribl.css'
 	};
 
 var doodle = {
