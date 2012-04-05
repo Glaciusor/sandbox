@@ -138,7 +138,7 @@ var doodle = {
 };
 
 
-if (dev) {
+if (!dev) {
 	doodle.initCanvas();
 }
 
