@@ -139,6 +139,7 @@ var doodle = {
 
 
 if (!dev) {
+console.log("initting");
 	doodle.initCanvas();
 }
 
