@@ -2,14 +2,13 @@
 
 //Misc TODOs:
 //When they change size and click on the canvas, the dot they draw is the old size; the click event happens before the blur event - FIX IT!
-//Make a "go away" button that will get rid of all the canvas stuff
 //Add an eraser (draw line with 0 opacity)
 //Put a lot of these styles into a stylesheet? If that's done then this JS file needs to pull the CSS or die trying (maybe can provide a monochrome degraded performance mode with a warning)
 //Can has screenshot saved to PNG? Also, being able to attach the screenshot to a ticket in Jira just by specifying a ticket number would be awesome... 1 tool to do it all
 //Make "pen" and "highlighter" mode. What about a mode that allows clicking without drawing, and actually triggers the underlying stuff not canvas? Can do that without hiding the canvas?
 //Make straight-edge mode, horizontal-edge mode, and free-form mode to allow for accurate highlighting and underlining. Default = free-form or perhaps save it in storage
 //Nice way to put in a text box right on the canvas?
-//Displaying by mouse the size/shape/color of the settings would be nice before clicking. This may require saving the canvas and redrawing it a lot with the additional dot on top on a mouse-move with mouse_held being false. 
+//Displaying by mouse the size/shape/color of the settings would be nice before clicking. This may require saving the canvas and redrawing it a lot with the additional dot on top on a mouse-move with mouse_held being false.
 //Would be really nice if the toolbar would animate and hide itself when the mouse isn't near it (mousemove, distance from bottom of window below a threshold = show, else hide)
 //Pretty-ify the toolbar with some CSS3. You know, metallic-looking toolbar, shiny buttons
 //Apply a cool CSS3 shadow to the buttons for whichever color and tool is selected
@@ -28,12 +27,34 @@ var dev = false,
 		css: dev ? 'skribl.css' : 'http://glaciusor.github.com/sandbox/Draw/skribl.css'
 	};
 
-var doodle = {
+var Skribl = {
 	$canvas:  null,
 	mouse_held: false,
 	color: "#000",
 	size: 4,
 	last_mouse_pos: null,
+	initSkribl: function () {
+		$('head').append('<link type="text/css" rel="stylesheet" href="' + linker.css + '" />');
+		this.initToggleButton();
+	},
+	toggleSkribl: function () {
+		this.$canvas.toggle();
+		$('#control_bar').toggle();
+	},
+	initToggleButton: function () {
+		var that = this;
+
+		$('body').append('<div id="skribl_toggle_button"></div>');
+
+		$('#skribl_toggle_button').delegate("", 'click', function (ev) {
+			if (!that.$canvas) {
+				that.initCanvas();
+			}
+			else {
+				that.toggleSkribl();
+			}
+		});
+	},
 	initCanvas: function () {
 		var width = $(document).width(),
 			height = $(document).height(),
@@ -42,8 +63,7 @@ var doodle = {
 		//TODO: On document resize, resize the canvas or find a way to make it auto-resize with the document
 		//TODO: make this auto-detect the highest Z-index and go 1 higher than it
 		$('body').append('<canvas id="draw_plane" width="' + width + 'px" height="' + height + 'px" style="position: absolute; top: 0px; left: 0px; z-index: 10000;"></canvas>')
-			.append('<div id="control_bar" style="position: fixed; bottom: 0px; width: 100%; height: 32px; background: #cccccc; z-index: 10001;"></div>');
-		$('head').append('<link type="text/css" rel="stylesheet" href="' + linker.css + '" />');
+			.append('<div id="control_bar"></div>');
 
 		//TODO: Make a nice way to create these, not specifying the whole html+css in one hardcoded string
 		$('#control_bar')
@@ -77,7 +97,6 @@ var doodle = {
 			$('#size_change').val(clean_input);
 			that.size = clean_input;
 		});
-		
 
 		//Clear button
 		$('#clear_canvas').delegate("", 'click', function (ev) {
@@ -135,7 +154,6 @@ var doodle = {
 	}
 };
 
-
 if (!dev) {
-	doodle.initCanvas();
+	Skribl.initSkribl();
 }
