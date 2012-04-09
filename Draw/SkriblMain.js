@@ -3,23 +3,20 @@
 //Misc TODOs:
 //When they change size and click on the canvas, the dot they draw is the old size; the click event happens before the blur event - FIX IT!
 //Add an eraser (draw line with 0 opacity)
-//Put a lot of these styles into a stylesheet? If that's done then this JS file needs to pull the CSS or die trying (maybe can provide a monochrome degraded performance mode with a warning)
 //Can has screenshot saved to PNG? Also, being able to attach the screenshot to a ticket in Jira just by specifying a ticket number would be awesome... 1 tool to do it all
 //Make "pen" and "highlighter" mode. What about a mode that allows clicking without drawing, and actually triggers the underlying stuff not canvas? Can do that without hiding the canvas?
 //Make straight-edge mode, horizontal-edge mode, and free-form mode to allow for accurate highlighting and underlining. Default = free-form or perhaps save it in storage
 //Nice way to put in a text box right on the canvas?
-//Displaying by mouse the size/shape/color of the settings would be nice before clicking. This may require saving the canvas and redrawing it a lot with the additional dot on top on a mouse-move with mouse_held being false.
 //Would be really nice if the toolbar would animate and hide itself when the mouse isn't near it (mousemove, distance from bottom of window below a threshold = show, else hide)
 //Pretty-ify the toolbar with some CSS3. You know, metallic-looking toolbar, shiny buttons
 //Apply a cool CSS3 shadow to the buttons for whichever color and tool is selected
 //Related to the shadow, for colors, make the shadow the same color as the selected color maybe? As for the tools selected, shade them a bit. Would look pretty and give the user some feedback as to what the settings are.
-//Do proper loading of jquery and jcanvas instead of @require in the userscript. Priority depends on whether it overrides jquery on the current page or just for this script.
 //make proper dev/live setup, not hacky "dev" var
 //use multi-canvas approach to show what would be drawn while mouse is up
 //use multi-canvas approach to allow drawing of arrows
 //window.parent check isn't taking care of "loading in iframe" bug. Need to address this another way.
 //When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
-//Move toggle button away from scrollbar a bit and make it wider (get an image? :) )
+//Style the toggle button so it looks like a toggle button, not just some random green rectangle
 //TODO: Make sure the jQuerys don't collide x.x
 var dev = false,
 	linker = {

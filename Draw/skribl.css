@@ -18,8 +18,8 @@
 }
 #skribl_toggle_button {
 	position: fixed;
-	right: 0px;
-	width: 12px;
+	right: 8px;
+	width: 24px;
 	height: 12px;
 	background: #00ff00;
 	z-index: 10001;
