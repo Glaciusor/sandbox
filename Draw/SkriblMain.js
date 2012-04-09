@@ -17,6 +17,7 @@
 //make proper dev/live setup, not hacky "dev" var
 //use multi-canvas approach to show what would be drawn while mouse is up
 //use multi-canvas approach to allow drawing of arrows
+//window.parent check isn't taking care of "loading in iframe" bug. Need to address this another way.
 //When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
 
 //Note: Intentionally using some of the older jQuery methods as the page this is loaded on may use an old version already

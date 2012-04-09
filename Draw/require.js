@@ -35,7 +35,6 @@ a;if(d.resourcesDone)for(l in a=x.contexts,a)if(!(l in K)&&(c=a[l],c.jQueryIncre
 y.resume();d.checkReadyState()},0)}})();
 
 }
-catch (err)
-{
-	console.log("Error:", err);
+catch (err) {
+	console.log("Skribl Error (require.js): ", err);
 }
