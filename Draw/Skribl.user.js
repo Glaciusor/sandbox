@@ -2,7 +2,6 @@
 // @name Skribl
 // @namespace Glaciusor
 // @include *
-// @match *
 // ==/UserScript==
 
 
