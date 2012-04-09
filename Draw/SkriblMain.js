@@ -19,10 +19,8 @@
 //use multi-canvas approach to allow drawing of arrows
 //window.parent check isn't taking care of "loading in iframe" bug. Need to address this another way.
 //When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
-
-//Note: Intentionally using some of the older jQuery methods as the page this is loaded on may use an old version already
-//TODO: any way to see if $.(whatever) exists, if not then define from the jQuery library I want, to give the features I want on pages reliant on old jQuery?
-
+//Move toggle button away from scrollbar a bit and make it wider (get an image? :) )
+//TODO: Make sure the jQuerys don't collide x.x
 var dev = false,
 	linker = {
 		css: dev ? 'skribl.css' : 'http://glaciusor.github.com/sandbox/Draw/skribl.css'
