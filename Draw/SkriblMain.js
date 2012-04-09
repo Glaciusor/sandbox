@@ -154,6 +154,3 @@ var Skribl = {
 	}
 };
 
-if (!dev) {
-	Skribl.initSkribl();
-}
