@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Skribl
 // @namespace Glaciusor
-// @include *
+// @include http://*
 // ==/UserScript==
 
 
