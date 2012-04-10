@@ -1,4 +1,4 @@
-#control_bar {
+#skribl_control_bar {
 	background: #ccc;
 	bottom: 0px;
 	height: 32px;
@@ -7,7 +7,7 @@
 	width: 100%;
 	z-index: 10001;
 }
-#control_bar div {
+#skribl_control_bar div {
 	display: block;
 	float: left;
 	margin: 6px;
@@ -24,4 +24,10 @@
 	background: #00ff00;
 	z-index: 10001;
 	top: 0px;
+}
+#skribl_draw_plane {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 10000;
 }

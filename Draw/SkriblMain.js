@@ -1,7 +1,6 @@
 
 
 //Misc TODOs:
-//When they change size and click on the canvas, the dot they draw is the old size; the click event happens before the blur event - FIX IT!
 //Add an eraser (draw line with 0 opacity)
 //Can has screenshot saved to PNG? Also, being able to attach the screenshot to a ticket in Jira just by specifying a ticket number would be awesome... 1 tool to do it all
 //Make "pen" and "highlighter" mode. What about a mode that allows clicking without drawing, and actually triggers the underlying stuff not canvas? Can do that without hiding the canvas?
@@ -14,10 +13,11 @@
 //make proper dev/live setup, not hacky "dev" var
 //use multi-canvas approach to show what would be drawn while mouse is up
 //use multi-canvas approach to allow drawing of arrows
-//window.parent check isn't taking care of "loading in iframe" bug. Need to address this another way.
 //When 100% complete, sit back and relax and enjoy the warm and fuzzy feeling of completion and satisfaction before moving on to something else.
 //Style the toggle button so it looks like a toggle button, not just some random green rectangle
 //TODO: Make sure the jQuerys don't collide x.x
+//control bar and canvas really should be separate classes and stuck into skribl
+//Is borkd in chrome x.x
 var dev = false,
 	linker = {
 		css: dev ? 'skribl.css' : 'http://glaciusor.github.com/sandbox/Draw/skribl.css'
@@ -25,17 +25,23 @@ var dev = false,
 
 var Skribl = {
 	$canvas:  null,
+	$control_bar: null,
 	mouse_held: false,
 	color: "#000",
 	size: 4,
 	last_mouse_pos: null,
 	initSkribl: function () {
+		//Prevent loading in iframes
+		if (!window.parent) {
+			return;
+		}
+
 		$('head').append('<link type="text/css" rel="stylesheet" href="' + linker.css + '" />');
 		this.initToggleButton();
 	},
 	toggleSkribl: function () {
 		this.$canvas.toggle();
-		$('#control_bar').toggle();
+		this.$control_bar.toggle();
 	},
 	initToggleButton: function () {
 		var that = this;
@@ -45,24 +51,22 @@ var Skribl = {
 		$('#skribl_toggle_button').delegate("", 'click', function (ev) {
 			if (!that.$canvas) {
 				that.initCanvas();
+				that.initControlBar();
 			}
 			else {
 				that.toggleSkribl();
 			}
 		});
 	},
-	initCanvas: function () {
-		var width = $(document).width(),
-			height = $(document).height(),
-			that = this;
-
-		//TODO: On document resize, resize the canvas or find a way to make it auto-resize with the document
-		//TODO: make this auto-detect the highest Z-index and go 1 higher than it
-		$('body').append('<canvas id="draw_plane" width="' + width + 'px" height="' + height + 'px" style="position: absolute; top: 0px; left: 0px; z-index: 10000;"></canvas>')
-			.append('<div id="control_bar"></div>');
+	initControlBar: function () {
+		var that = this;
 
 		//TODO: Make a nice way to create these, not specifying the whole html+css in one hardcoded string
-		$('#control_bar')
+		$('body').append('<div id="skribl_control_bar"></div>');
+
+		this.$control_bar = $('#skribl_control_bar');
+
+		this.$control_bar
 			.append('<div class="color_picker" style="background-color: #F00;"></div>')
 			.append('<div class="color_picker" style="background-color: #F60;"></div>')
 			.append('<div class="color_picker" style="background-color: #FF0;"></div>')
@@ -76,22 +80,11 @@ var Skribl = {
 			.append('<div class="color_picker" style="background-color: #888;"></div>')
 			.append('<div class="color_picker" style="background-color: #000;"></div>')
 			.append('<div><input type="button" id="clear_canvas" value="Clear" /></div>')
-			.append('<div><input type="text" id="size_change" value="' + that.size + '" size="5" /></div>');
-
-		//Give us a jQuery reference to the canvas
-		this.$canvas = $('#draw_plane');
+			.append('<div><input type="text" id="size_change" value="' + that.size + '" size="3" /></div>');
 
 		//Bind an onblur handler to the size changer input
-		$('#size_change').blur(function (ev) {
-			var clean_input = parseInt($(ev.currentTarget).val(), 10);
-
-			if (isNaN(clean_input) || clean_input < 1 || clean_input > 256) {
-				console.log("Warning: Invalid size selected. Restoring previous value.");
-				clean_input = that.size;
-			}
-
-			$('#size_change').val(clean_input);
-			that.size = clean_input;
+		$('#size_change').blur(function () {
+			that.getSize();
 		});
 
 		//Clear button
@@ -104,6 +97,18 @@ var Skribl = {
 		$('div.color_picker').delegate("", 'click', function (ev) {
 			that.color = $(ev.currentTarget).css('background-color');
 		});
+	},
+	initCanvas: function () {
+		var width = $(document).width(),
+			height = $(document).height(),
+			that = this;
+
+		//TODO: On document resize, resize the canvas or find a way to make it auto-resize with the document
+		//TODO: make this auto-detect the highest Z-index and go 1 higher than it
+		$('body').append('<canvas id="skribl_draw_plane" width="' + width + 'px" height="' + height + 'px"></canvas>')
+
+		//Give us a jQuery reference to the canvas
+		this.$canvas = $('#skribl_draw_plane');
 
 		//What to do when the user presses down on the mouse...
 		this.$canvas.delegate("", 'mousedown', function (ev) {
@@ -112,6 +117,10 @@ var Skribl = {
 				x: ev.pageX,
 				y: ev.pageY
 			};
+
+			//Make sure we get the size from the size box before drawing
+			that.getSize();
+
 			that.$canvas.drawEllipse({
 				x: ev.pageX,
 				y: ev.pageY,
@@ -142,11 +151,24 @@ var Skribl = {
 
 				that.last_mouse_pos = { x: ev.pageX, y: ev.pageY };
 			}
-
 		});
 
 		//Allow chaining in the future :)
 		return this;
+	},
+	getSize: function () {
+		var clean_input = parseInt($('#size_change').val(), 10);
+
+		if (isNaN(clean_input) || clean_input < 1 || clean_input > 256) {
+			console.log("Warning: Invalid size selected. Restoring previous value.");
+			clean_input = that.size;
+		}
+
+		$('#size_change').val(clean_input);
+		this.size = clean_input;
+
+		return this;
 	}
+
 };
 
